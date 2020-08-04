@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_dart_for_ui/widgets/profile_tags.dart';
+import 'package:flutter_clean_dart_for_ui/widgets/spacing_widgets.dart';
 
 class ProfilePage extends StatelessWidget {
   final List<String> profileTags = [
@@ -17,41 +19,42 @@ class ProfilePage extends StatelessWidget {
         child: Icon(Icons.chat, size: 25),
         onPressed: () {},
       ),
-      body: Column(
+      body: _buildBody(context),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
         children: <Widget>[
-          SizedBox(height: 10),
-          Center(
-            child: CircleAvatar(
-              child: Icon(Icons.person, size: 100),
-              radius: MediaQuery.of(context).size.width / 4,
-            ),
+          SpaceH10(),
+          _buildProfilePicture(context),
+          SpaceH10(),
+          Text(
+            "JOHN DOM",
+            style: Theme.of(context).textTheme.title,
+            overflow: TextOverflow.clip,
           ),
-          SizedBox(height: 10),
-          Text("JOHN DOM", style: Theme.of(context).textTheme.title),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting "
-                "industry. Lorem Ipsum has been the industry's standard dummy.",
-                style: Theme.of(context).textTheme.subtitle1),
-          ),
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.symmetric(horizontal: 4.0),
-            child: Wrap(
-              spacing: 4,
-              children: _tagsToChips(profileTags).toList(),
-            ),
-          ),
+          SpaceH10(),
+          Text(
+              "Lorem Ipsum is simply dummy text of the printing and typesetting "
+              "industry. Lorem Ipsum has been the industry's standard dummy.",
+              style: Theme.of(context).textTheme.subtitle1),
+          SpaceH10(),
+          ProfileTags(profileTags: profileTags),
         ],
       ),
     );
   }
 
-  // Create Async Generator
-  Iterable<Chip> _tagsToChips(List<String> tags) sync* {
-    for (String tag in tags) {
-      yield Chip(label: Text(tag));
-    }
+  Widget _buildProfilePicture(BuildContext context) {
+    final halfScreenRadius = MediaQuery.of(context).size.width / 4;
+    return Center(
+      child: CircleAvatar(
+        child: Icon(Icons.person, size: 100),
+        radius: halfScreenRadius,
+      ),
+    );
   }
 }
